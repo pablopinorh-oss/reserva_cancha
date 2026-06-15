@@ -1,0 +1,343 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+h1 {
+  text-align: center;
+  color: #1d3557;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+main > p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 35px;
+}
+
+h2 {
+  color: #1d3557;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #2f3e46;
+}
+
+.nav-vistas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.btn-activo {
+  background-color: #457b9d;
+}
+
+.grid-canchas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card h4 {
+  margin-bottom: 12px;
+  color: #1d3557;
+}
+
+.horario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+}
+
+button {
+  background-color: #1d3557;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #457b9d;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.mensaje {
+  background-color: #d8f3dc;
+  color: #1b4332;
+  border: 1px solid #95d5b2;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.panel-controles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.form-identificacion,
+.form-fecha,
+.form-filtro {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-identificacion label,
+.form-fecha label,
+.form-filtro label,
+.card label {
+  display: block;
+  font-weight: bold;
+  color: #1d3557;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+.form-identificacion input,
+.form-fecha input,
+.form-filtro select,
+.card input {
+  width: 100%;
+  max-width: 350px;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.form-identificacion small,
+.form-fecha small {
+  display: block;
+  margin-top: 8px;
+  color: #666;
+}
+
+.btn-cancelar {
+  background-color: #b02a37;
+  margin-top: 10px;
+}
+
+.btn-cancelar:hover {
+  background-color: #842029;
+}
+
+.btn-activar {
+  background-color: #2d6a4f;
+  margin-top: 10px;
+}
+
+.btn-activar:hover {
+  background-color: #1b4332;
+}
+
+.estado-disponible {
+  color: #2d6a4f;
+  font-weight: bold;
+}
+
+.estado-no-disponible {
+  color: #b02a37;
+  font-weight: bold;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .panel-controles,
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  main {
+    padding: 24px 16px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .nav-vistas {
+    flex-direction: column;
+  }
+
+  .horario {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+.acciones-admin {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-eliminar {
+  background-color: #6c757d;
+  margin-top: 10px;
+}
+
+.btn-eliminar:hover {
+  background-color: #495057;
+}
+.resumen-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.resumen-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.resumen-card span {
+  display: block;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.resumen-card strong {
+  display: block;
+  color: #1d3557;
+  font-size: 30px;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.login-card h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.login-card p {
+  text-align: center;
+  color: #555;
+}
+
+.login-card label {
+  display: block;
+  font-weight: bold;
+  color: #1d3557;
+  margin-bottom: 8px;
+  margin-top: 14px;
+}
+
+.login-card input,
+.login-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.barra-usuario {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.btn-cerrar {
+  background-color: #6c757d;
+}
+
+.btn-cerrar:hover {
+  background-color: #495057;
+}
+
+@media (max-width: 700px) {
+  .barra-usuario {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
