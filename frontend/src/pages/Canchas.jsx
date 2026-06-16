@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { supabase } from "../services/supabaseClient";
+import ResumenEstudiante from "../components/ResumenEstudiante";
+import PanelControlesReserva from "../components/PanelControlesReserva";
+import CanchaCard from "../components/CanchaCard";
+import ReservaCard from "../components/ReservaCard";
 
-function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos }) {
+function Canchas({ canchas, reservas, usuarioActual, cargarDatos }) {
   const [mensaje, setMensaje] = useState("");
   const [fechaReserva, setFechaReserva] = useState("");
   const [filtroDisciplina, setFiltroDisciplina] = useState("Todas");
@@ -34,15 +38,32 @@ function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos })
 
   const { inicioSemana, finSemana } = obtenerSemanaActual();
 
+  const disciplinasDisponibles = [
+    "Todas",
+    ...new Set(canchas.map((cancha) => cancha.disciplina)),
+  ];
+
   const canchasFiltradas =
     filtroDisciplina === "Todas"
       ? canchas
       : canchas.filter((cancha) => cancha.disciplina === filtroDisciplina);
 
-  const reservasDelUsuario = reservas.filter(
-    (reserva) =>
-      reserva.estudiante === usuarioActual.nombre &&
-      reserva.estado === "Activa"
+  const reservasDelUsuario = reservas
+    .filter(
+      (reserva) =>
+        reserva.estudiante === usuarioActual.nombre &&
+        reserva.estado === "Activa"
+    )
+    .sort((a, b) => {
+      if (a.fecha !== b.fecha) {
+        return new Date(a.fecha) - new Date(b.fecha);
+      }
+
+      return a.horario.localeCompare(b.horario);
+    });
+
+  const reservasActivas = reservas.filter(
+    (reserva) => reserva.estado === "Activa"
   );
 
   const reservarCancha = async (cancha, horario) => {
@@ -63,7 +84,7 @@ function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos })
       return;
     }
 
-    const reservaDuplicada = reservas.find(
+    const reservaDuplicada = reservas.some(
       (reserva) =>
         reserva.cancha_id === cancha.id &&
         reserva.fecha === fechaReserva &&
@@ -78,12 +99,7 @@ function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos })
       return;
     }
 
-    const reservasActivasDelEstudiante = reservas.filter(
-      (reserva) =>
-        reserva.estudiante === estudiante && reserva.estado === "Activa"
-    );
-
-    if (reservasActivasDelEstudiante.length >= LIMITE_RESERVAS_ACTIVAS) {
+    if (reservasDelUsuario.length >= LIMITE_RESERVAS_ACTIVAS) {
       setMensaje(
         `No puedes tener más de ${LIMITE_RESERVAS_ACTIVAS} reservas activas. Cancela una reserva antes de crear otra.`
       );
@@ -110,17 +126,25 @@ function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos })
     }
 
     setMensaje(
-      `Reserva realizada correctamente: ${cancha.nombre}, fecha ${fechaReserva}, horario ${horario}.`
+      `Reserva realizada correctamente: ${cancha.nombre}, ${fechaReserva}, ${horario}.`
     );
 
     cargarDatos();
   };
 
-  const cancelarReserva = async (idReserva) => {
+  const cancelarReserva = async (reserva) => {
+    const confirmar = window.confirm(
+      `¿Seguro que deseas cancelar la reserva de ${reserva.cancha} el ${reserva.fecha} a las ${reserva.horario}?`
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
     const { error } = await supabase
       .from("reservas")
       .update({ estado: "Cancelada" })
-      .eq("id", idReserva);
+      .eq("id", reserva.id);
 
     if (error) {
       console.log("Error al cancelar reserva:", error);
@@ -137,148 +161,88 @@ function Canchas({ canchas, reservas, setReservas, usuarioActual, cargarDatos })
 
   return (
     <section>
-      <h2>Canchas y horarios disponibles</h2>
-
-      <div className="panel-controles">
-        <div className="form-fecha">
-          <label>Fecha de reserva</label>
-          <input
-            type="date"
-            value={fechaReserva}
-            min={inicioSemana}
-            max={finSemana}
-            onChange={(e) => setFechaReserva(e.target.value)}
-          />
-          <small>
-            Solo se permiten reservas entre {inicioSemana} y {finSemana}.
-          </small>
-        </div>
-
-        <div className="form-filtro">
-          <label>Filtrar por disciplina</label>
-          <select
-            value={filtroDisciplina}
-            onChange={(e) => setFiltroDisciplina(e.target.value)}
-          >
-            <option value="Todas">Todas</option>
-            <option value="Fútbol">Fútbol</option>
-            <option value="Básquetbol">Básquetbol</option>
-            <option value="Tenis">Tenis</option>
-            <option value="Voleibol">Voleibol</option>
-            <option value="Pádel">Pádel</option>
-          </select>
-        </div>
-
-        <div className="form-identificacion">
-          <label>Regla de uso</label>
-          <p>Máximo {LIMITE_RESERVAS_ACTIVAS} reservas activas por estudiante.</p>
-        </div>
+      <div className="titulo-estudiante-simple">
+        <h2>Reserva de canchas</h2>
+        <p>
+          Bienvenido, <strong>{usuarioActual.nombre}</strong>. Selecciona una
+          fecha y revisa los horarios disponibles.
+        </p>
       </div>
+
+      <ResumenEstudiante
+        reservasDelUsuario={reservasDelUsuario}
+        limiteReservas={LIMITE_RESERVAS_ACTIVAS}
+        fechaReserva={fechaReserva}
+        canchasFiltradas={canchasFiltradas}
+      />
+
+      <PanelControlesReserva
+        fechaReserva={fechaReserva}
+        setFechaReserva={setFechaReserva}
+        inicioSemana={inicioSemana}
+        finSemana={finSemana}
+        filtroDisciplina={filtroDisciplina}
+        setFiltroDisciplina={setFiltroDisciplina}
+        disciplinasDisponibles={disciplinasDisponibles}
+        limiteReservas={LIMITE_RESERVAS_ACTIVAS}
+      />
 
       {mensaje && <p className="mensaje">{mensaje}</p>}
 
-      <div className="grid-canchas">
-        {canchasFiltradas.map((cancha) => (
-          <div className="card" key={cancha.id}>
-            <h3>{cancha.nombre}</h3>
-
-            <p>
-              <strong>Disciplina:</strong> {cancha.disciplina}
-            </p>
-
-            <p>
-              <strong>Ubicación:</strong> {cancha.ubicacion}
-            </p>
-
-            <p>
-              <strong>Estado:</strong>{" "}
-              <span
-                className={
-                  cancha.estado === "Disponible"
-                    ? "estado-disponible"
-                    : "estado-no-disponible"
-                }
-              >
-                {cancha.estado}
-              </span>
-            </p>
-
-            <h4>Horarios</h4>
-
-            {cancha.horarios.map((horario) => {
-              const ocupado = reservas.some(
-                (reserva) =>
-                  reserva.cancha_id === cancha.id &&
-                  reserva.fecha === fechaReserva &&
-                  reserva.horario === horario &&
-                  reserva.estado === "Activa"
-              );
-
-              const canchaNoDisponible = cancha.estado !== "Disponible";
-
-              return (
-                <div className="horario" key={horario}>
-                  <span>{horario}</span>
-
-                  <button
-                    type="button"
-                    onClick={() => reservarCancha(cancha, horario)}
-                    disabled={ocupado || canchaNoDisponible}
-                  >
-                    {canchaNoDisponible
-                      ? "No disponible"
-                      : ocupado
-                      ? "Ocupado"
-                      : "Reservar"}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-
-      <h2>Mis reservas</h2>
-
-      {reservasDelUsuario.length === 0 ? (
-        <p>No tienes reservas registradas.</p>
-      ) : (
-        <div className="grid-canchas">
-          {reservasDelUsuario.map((reserva) => (
-            <div className="card" key={reserva.id}>
-              <h3>{reserva.cancha}</h3>
-
+      <div className="layout-estudiante">
+        <div className="columna-canchas">
+          <div className="seccion-titulo">
+            <div>
+              <h2>Canchas disponibles</h2>
               <p>
-                <strong>Disciplina:</strong> {reserva.disciplina}
+                Selecciona un horario disponible para la fecha escogida.
               </p>
-
-              <p>
-                <strong>Fecha:</strong> {reserva.fecha}
-              </p>
-
-              <p>
-                <strong>Horario:</strong> {reserva.horario}
-              </p>
-
-              <p>
-                <strong>Estudiante:</strong> {reserva.estudiante}
-              </p>
-
-              <p>
-                <strong>Estado:</strong> {reserva.estado}
-              </p>
-
-              <button
-                type="button"
-                className="btn-cancelar"
-                onClick={() => cancelarReserva(reserva.id)}
-              >
-                Cancelar reserva
-              </button>
             </div>
-          ))}
+          </div>
+
+          {canchasFiltradas.length === 0 ? (
+            <p>No existen canchas registradas para esta disciplina.</p>
+          ) : (
+            <div className="grid-canchas grid-canchas-estudiante">
+              {canchasFiltradas.map((cancha) => (
+                <CanchaCard
+                  key={cancha.id}
+                  cancha={cancha}
+                  fechaReserva={fechaReserva}
+                  reservasActivas={reservasActivas}
+                  reservasDelUsuario={reservasDelUsuario}
+                  limiteReservas={LIMITE_RESERVAS_ACTIVAS}
+                  reservarCancha={reservarCancha}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      )}
+
+        <aside className="panel-mis-reservas">
+          <div className="panel-mis-reservas-header">
+            <h2>Mis reservas</h2>
+            <p>Reservas activas del estudiante.</p>
+          </div>
+
+          {reservasDelUsuario.length === 0 ? (
+            <div className="estado-vacio estado-vacio-compacto">
+              <h3>Sin reservas activas</h3>
+              <p>Cuando reserves una cancha, aparecerá aquí.</p>
+            </div>
+          ) : (
+            <div className="lista-reservas-compacta">
+              {reservasDelUsuario.map((reserva) => (
+                <ReservaCard
+                  key={reserva.id}
+                  reserva={reserva}
+                  cancelarReserva={cancelarReserva}
+                />
+              ))}
+            </div>
+          )}
+        </aside>
+      </div>
     </section>
   );
 }

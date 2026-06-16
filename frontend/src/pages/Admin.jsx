@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { supabase } from "../services/supabaseClient";
+import TablaCanchasAdmin from "../components/TablaCanchasAdmin";
+import TablaReservasAdmin from "../components/TablaReservasAdmin";
+import ResumenAdmin from "../components/ResumenAdmin";
+import FormularioCancha from "../components/FormularioCancha";
 
 function Admin({ canchas, reservas, cargarDatos }) {
   const [mensaje, setMensaje] = useState("");
@@ -19,7 +23,15 @@ function Admin({ canchas, reservas, cargarDatos }) {
     (cancha) => cancha.estado === "No disponible"
   ).length;
 
-  const totalReservas = reservas.length;
+  const totalReservas = reservas.filter(
+    (reserva) => reserva.estado === "Activa"
+  ).length;
+
+  const reservasOrdenadas = [...reservas].sort((a, b) => {
+    if (a.estado === "Activa" && b.estado !== "Activa") return -1;
+    if (a.estado !== "Activa" && b.estado === "Activa") return 1;
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
 
   const agregarCancha = async (e) => {
     e.preventDefault();
@@ -30,6 +42,17 @@ function Admin({ canchas, reservas, cargarDatos }) {
       nuevaCancha.ubicacion.trim() === ""
     ) {
       setMensaje("Debes completar todos los campos para agregar una cancha.");
+      return;
+    }
+
+    const canchaDuplicada = canchas.some(
+      (cancha) =>
+        cancha.nombre.toLowerCase().trim() ===
+        nuevaCancha.nombre.toLowerCase().trim()
+    );
+
+    if (canchaDuplicada) {
+      setMensaje("Ya existe una cancha registrada con ese nombre.");
       return;
     }
 
@@ -80,12 +103,12 @@ function Admin({ canchas, reservas, cargarDatos }) {
 
   const eliminarCancha = async (cancha) => {
     const tieneReservas = reservas.some(
-      (reserva) => reserva.cancha_id === cancha.id && reserva.estado === "Activa"
+      (reserva) => reserva.cancha_id === cancha.id
     );
 
     if (tieneReservas) {
       setMensaje(
-        "No se puede eliminar esta cancha porque tiene reservas activas registradas."
+        "No se puede eliminar esta cancha porque tiene reservas registradas. Puedes deshabilitarla si ya no estará disponible."
       );
       return;
     }
@@ -113,167 +136,146 @@ function Admin({ canchas, reservas, cargarDatos }) {
     cargarDatos();
   };
 
+  const cancelarReservaAdmin = async (reserva) => {
+    if (reserva.estado !== "Activa") {
+      setMensaje("Esta reserva ya se encuentra cancelada.");
+      return;
+    }
+
+    const confirmar = window.confirm(
+      `¿Seguro que deseas cancelar la reserva de ${reserva.estudiante}?`
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    const { error } = await supabase
+      .from("reservas")
+      .update({ estado: "Cancelada" })
+      .eq("id", reserva.id);
+
+    if (error) {
+      console.log("Error al cancelar reserva:", error);
+      setMensaje("Error al cancelar la reserva.");
+      return;
+    }
+
+    setMensaje("Reserva cancelada correctamente por el administrador.");
+    cargarDatos();
+  };
+
+  const reactivarReservaAdmin = async (reserva) => {
+    if (reserva.estado === "Activa") {
+      setMensaje("Esta reserva ya se encuentra activa.");
+      return;
+    }
+
+    const existeReservaActiva = reservas.some(
+      (reservaExistente) =>
+        reservaExistente.id !== reserva.id &&
+        reservaExistente.cancha_id === reserva.cancha_id &&
+        reservaExistente.fecha === reserva.fecha &&
+        reservaExistente.horario === reserva.horario &&
+        reservaExistente.estado === "Activa"
+    );
+
+    if (existeReservaActiva) {
+      setMensaje(
+        "No se puede reactivar esta reserva porque el horario ya está ocupado por otra reserva activa."
+      );
+      return;
+    }
+
+    const confirmar = window.confirm(
+      `¿Seguro que deseas reactivar la reserva de ${reserva.estudiante}?`
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    const { error } = await supabase
+      .from("reservas")
+      .update({ estado: "Activa" })
+      .eq("id", reserva.id);
+
+    if (error) {
+      console.log("Error al reactivar reserva:", error);
+      setMensaje("Error al reactivar la reserva.");
+      return;
+    }
+
+    setMensaje("Reserva reactivada correctamente.");
+    cargarDatos();
+  };
+
+  const eliminarReservaAdmin = async (reserva) => {
+    const confirmar = window.confirm(
+      "¿Seguro que deseas eliminar definitivamente esta reserva?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    const { error } = await supabase
+      .from("reservas")
+      .delete()
+      .eq("id", reserva.id);
+
+    if (error) {
+      console.log("Error al eliminar reserva:", error);
+      setMensaje("Error al eliminar la reserva.");
+      return;
+    }
+
+    setMensaje("Reserva eliminada correctamente.");
+    cargarDatos();
+  };
+
   return (
     <section>
-      <h2>Panel de Administrador</h2>
-
-      <div className="resumen-admin">
-        <div className="resumen-card">
-          <span>Total de canchas</span>
-          <strong>{totalCanchas}</strong>
-        </div>
-
-        <div className="resumen-card">
-          <span>Canchas disponibles</span>
-          <strong>{canchasDisponibles}</strong>
-        </div>
-
-        <div className="resumen-card">
-          <span>Canchas no disponibles</span>
-          <strong>{canchasNoDisponibles}</strong>
-        </div>
-
-        <div className="resumen-card">
-          <span>Reservas registradas</span>
-          <strong>{totalReservas}</strong>
+      <div className="encabezado-seccion">
+        <div>
+          <h2>Panel de Administrador</h2>
+          <p>
+            Gestiona las canchas registradas, su disponibilidad y las reservas
+            realizadas por los estudiantes.
+          </p>
         </div>
       </div>
+
+      <ResumenAdmin
+        totalCanchas={totalCanchas}
+        canchasDisponibles={canchasDisponibles}
+        canchasNoDisponibles={canchasNoDisponibles}
+        totalReservas={totalReservas}
+      />
 
       {mensaje && <p className="mensaje">{mensaje}</p>}
 
       <div className="admin-layout">
-        <form className="card" onSubmit={agregarCancha}>
-          <h3>Agregar nueva cancha</h3>
+        <FormularioCancha
+          nuevaCancha={nuevaCancha}
+          setNuevaCancha={setNuevaCancha}
+          agregarCancha={agregarCancha}
+        />
 
-          <label>Nombre de la cancha</label>
-          <input
-            type="text"
-            placeholder="Ej: Cancha de Pádel"
-            value={nuevaCancha.nombre}
-            onChange={(e) =>
-              setNuevaCancha({
-                ...nuevaCancha,
-                nombre: e.target.value,
-              })
-            }
-          />
-
-          <label>Disciplina</label>
-          <input
-            type="text"
-            placeholder="Ej: Pádel"
-            value={nuevaCancha.disciplina}
-            onChange={(e) =>
-              setNuevaCancha({
-                ...nuevaCancha,
-                disciplina: e.target.value,
-              })
-            }
-          />
-
-          <label>Ubicación</label>
-          <input
-            type="text"
-            placeholder="Ej: Sector exterior"
-            value={nuevaCancha.ubicacion}
-            onChange={(e) =>
-              setNuevaCancha({
-                ...nuevaCancha,
-                ubicacion: e.target.value,
-              })
-            }
-          />
-
-          <button type="submit">Agregar cancha</button>
-        </form>
-
-        <div>
-          <h3>Canchas registradas</h3>
-
-          <div className="grid-canchas">
-            {canchas.map((cancha) => (
-              <div className="card" key={cancha.id}>
-                <h3>{cancha.nombre}</h3>
-
-                <p>
-                  <strong>Disciplina:</strong> {cancha.disciplina}
-                </p>
-
-                <p>
-                  <strong>Ubicación:</strong> {cancha.ubicacion}
-                </p>
-
-                <p>
-                  <strong>Estado:</strong>{" "}
-                  <span
-                    className={
-                      cancha.estado === "Disponible"
-                        ? "estado-disponible"
-                        : "estado-no-disponible"
-                    }
-                  >
-                    {cancha.estado}
-                  </span>
-                </p>
-
-                <div className="acciones-admin">
-                  <button
-                    type="button"
-                    className={
-                      cancha.estado === "Disponible"
-                        ? "btn-cancelar"
-                        : "btn-activar"
-                    }
-                    onClick={() => cambiarEstadoCancha(cancha)}
-                  >
-                    {cancha.estado === "Disponible"
-                      ? "Deshabilitar"
-                      : "Habilitar"}
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn-eliminar"
-                    onClick={() => eliminarCancha(cancha)}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <TablaCanchasAdmin
+          canchas={canchas}
+          reservas={reservas}
+          cambiarEstadoCancha={cambiarEstadoCancha}
+          eliminarCancha={eliminarCancha}
+        />
       </div>
 
-      <h2>Reservas registradas</h2>
-
-      {reservas.length === 0 ? (
-        <p>No existen reservas registradas.</p>
-      ) : (
-        <div className="grid-canchas">
-          {reservas.map((reserva) => (
-            <div className="card" key={reserva.id}>
-              <h3>{reserva.cancha}</h3>
-
-              <p>
-                <strong>Estudiante:</strong> {reserva.estudiante}
-              </p>
-
-              <p>
-                <strong>Fecha:</strong> {reserva.fecha}
-              </p>
-
-              <p>
-                <strong>Horario:</strong> {reserva.horario}
-              </p>
-
-              <p>
-                <strong>Estado:</strong> {reserva.estado}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+      <TablaReservasAdmin
+        reservasOrdenadas={reservasOrdenadas}
+        cancelarReservaAdmin={cancelarReservaAdmin}
+        reactivarReservaAdmin={reactivarReservaAdmin}
+        eliminarReservaAdmin={eliminarReservaAdmin}
+      />
     </section>
   );
 }
