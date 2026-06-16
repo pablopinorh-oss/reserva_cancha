@@ -938,3 +938,431 @@ button:disabled {
     width: 100%;
   }
 }
+/* =========================
+   Vista móvil mejorada
+   Agregar al final de App.css
+========================= */
+
+@media (max-width: 600px) {
+  main {
+    padding: 18px 12px 34px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  main > p {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  h3 {
+    font-size: 17px;
+  }
+
+  .barra-usuario {
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+
+  .barra-usuario span,
+  .barra-usuario strong {
+    font-size: 14px;
+  }
+
+  .nav-vistas {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .nav-vistas button {
+    min-width: 0;
+    width: 100%;
+    padding: 11px 12px;
+  }
+
+  .titulo-estudiante-simple {
+    margin: 12px 0 14px;
+  }
+
+  .titulo-estudiante-simple h2 {
+    font-size: 22px;
+  }
+
+  .titulo-estudiante-simple p {
+    font-size: 13px;
+  }
+
+  .resumen-estudiante-compacto {
+    padding: 12px;
+    gap: 10px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .item-resumen-estudiante {
+    text-align: left;
+    padding-bottom: 8px;
+  }
+
+  .item-resumen-estudiante span {
+    font-size: 12px;
+  }
+
+  .item-resumen-estudiante strong {
+    font-size: 16px;
+  }
+
+  .barra-reserva-compacta {
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+
+  .campo-reserva label {
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .campo-reserva input,
+  .campo-reserva select {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .regla-reserva-compacta {
+    padding: 10px;
+    text-align: left;
+  }
+
+  .layout-estudiante {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .seccion-titulo {
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
+
+  .seccion-titulo h2 {
+    font-size: 21px;
+  }
+
+  .seccion-titulo p {
+    font-size: 13px;
+  }
+
+  .grid-canchas,
+  .grid-canchas-estudiante {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card,
+  .cancha-card-mejorada,
+  .panel-mis-reservas,
+  .admin-panel-listado,
+  .panel-reservas,
+  .encabezado-seccion {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cancha-card-mejorada h3 {
+    font-size: 17px;
+  }
+
+  .subtitulo-card {
+    font-size: 13px;
+  }
+
+  .estado-disponible,
+  .estado-no-disponible {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .bloque-horarios h4 {
+    font-size: 15px;
+  }
+
+  .horarios-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .horario-chip {
+    min-height: 48px;
+    padding: 10px 12px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .horario-chip span {
+    font-size: 14px;
+  }
+
+  .horario-chip small {
+    font-size: 11px;
+  }
+
+  .panel-mis-reservas {
+    position: static;
+    order: 2;
+  }
+
+  .panel-mis-reservas-header h2 {
+    font-size: 20px;
+  }
+
+  .panel-mis-reservas-header p {
+    font-size: 13px;
+  }
+
+  .reserva-card-compacta {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .reserva-card-header {
+    flex-direction: column;
+  }
+
+  .reserva-detalle-compacto {
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .btn-cancelar-compacto {
+    padding: 10px;
+  }
+
+  .login-container {
+    margin-top: 18px;
+  }
+
+  .login-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .login-card h2 {
+    font-size: 22px;
+  }
+
+  .login-card p {
+    font-size: 14px;
+  }
+
+  .encabezado-seccion h2 {
+    font-size: 21px;
+  }
+
+  .encabezado-seccion p {
+    font-size: 13px;
+  }
+
+  .resumen-admin {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .resumen-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .resumen-card span {
+    font-size: 12px;
+  }
+
+  .resumen-card strong {
+    font-size: 22px;
+  }
+
+  .admin-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-form-card {
+    position: static;
+    width: 100%;
+  }
+
+  .admin-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabla-contenedor {
+    overflow-x: auto;
+  }
+
+  .tabla-admin {
+    min-width: 720px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+}
+/* =========================
+/* =========================
+   HOTFIX MÓVIL INPUTS Y FECHA
+   Pegar al final de App.css
+========================= */
+
+@media (max-width: 600px) {
+  * {
+    box-sizing: border-box !important;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 14px 38px !important;
+    overflow-x: hidden !important;
+  }
+
+  .barra-reserva-compacta {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .campo-reserva,
+  .regla-reserva-compacta {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: block !important;
+  }
+
+  .campo-reserva label {
+    width: 100% !important;
+    text-align: left !important;
+    font-size: 15px !important;
+    margin-bottom: 7px !important;
+  }
+
+  input,
+  select,
+  textarea,
+  .login-card input,
+  .login-card select,
+  .campo-reserva input,
+  .campo-reserva select,
+  .admin-form-card input,
+  .card input {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    color: #243042 !important;
+    background-color: #ffffff !important;
+    border: 1px solid var(--color-borde) !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #243042 !important;
+    caret-color: #243042 !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #9ca3af !important;
+  }
+
+  input[type="date"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    color: #243042 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #243042 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+  }
+
+  input[type="date"]::-webkit-date-and-time-value {
+    text-align: left !important;
+    color: #243042 !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.75 !important;
+  }
+
+  .regla-reserva-compacta {
+    padding: 13px !important;
+    border-radius: 14px !important;
+    text-align: left !important;
+  }
+
+  .regla-reserva-compacta span {
+    font-size: 14px !important;
+  }
+
+  .regla-reserva-compacta strong {
+    font-size: 16px !important;
+  }
+
+  .regla-reserva-compacta small {
+    font-size: 13px !important;
+  }
+
+  .horario-chip {
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .horario-chip span {
+    font-size: 15px !important;
+  }
+
+  .horario-chip small {
+    font-size: 12px !important;
+  }
+}
