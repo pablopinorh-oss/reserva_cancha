@@ -30,7 +30,7 @@ function Login({ setUsuarioActual }) {
           deportivas.
         </p>
 
-        {mensaje && <p className="mensaje">{mensaje}</p>}
+        {mensaje && <p className="mensaje-error">{mensaje}</p>}
 
         <form onSubmit={iniciarSesion}>
           <label>Correo Institucional o Identificación</label>
