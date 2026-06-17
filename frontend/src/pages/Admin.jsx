@@ -4,6 +4,7 @@ import TablaCanchasAdmin from "../components/TablaCanchasAdmin";
 import TablaReservasAdmin from "../components/TablaReservasAdmin";
 import ResumenAdmin from "../components/ResumenAdmin";
 import FormularioCancha from "../components/FormularioCancha";
+import ReporteAdmin from "../components/ReporteAdmin";
 
 function Admin({ canchas, reservas, cargarDatos }) {
   const [mensaje, setMensaje] = useState("");
@@ -294,6 +295,7 @@ function Admin({ canchas, reservas, cargarDatos }) {
         canchasNoDisponibles={canchasNoDisponibles}
         totalReservas={totalReservas}
       />
+      <ReporteAdmin reservas={reservas} />
 
       {mensaje && <p className="mensaje">{mensaje}</p>}
 

@@ -1366,3 +1366,71 @@ button:disabled {
     font-size: 12px !important;
   }
 }
+/* =========================
+   Reporte administrador
+========================= */
+
+.reporte-admin {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-suave);
+}
+
+.reporte-admin-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.reporte-admin-header h3 {
+  margin: 0 0 6px;
+  color: var(--color-principal);
+  font-size: 22px;
+}
+
+.reporte-admin-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.reporte-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.reporte-card {
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+.reporte-card span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.reporte-card strong {
+  display: block;
+  color: var(--color-principal);
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.reporte-card small {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.reporte-card-destacado strong {
+  font-size: 17px;
+}
