@@ -3,6 +3,7 @@ function TablaCanchasAdmin({
   reservas,
   cambiarEstadoCancha,
   eliminarCancha,
+  editarCancha,
 }) {
   return (
     <div className="admin-panel-listado">
@@ -68,6 +69,14 @@ function TablaCanchasAdmin({
 
                     <td>
                       <div className="acciones-tabla">
+                        <button
+                          type="button"
+                          className="btn-activar"
+                          onClick={() => editarCancha(cancha)}
+                        >
+                          Editar
+                        </button>
+
                         <button
                           type="button"
                           className={

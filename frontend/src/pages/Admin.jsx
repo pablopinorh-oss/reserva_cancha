@@ -7,6 +7,8 @@ import FormularioCancha from "../components/FormularioCancha";
 
 function Admin({ canchas, reservas, cargarDatos }) {
   const [mensaje, setMensaje] = useState("");
+  const [canchaEditando, setCanchaEditando] = useState(null);
+
   const [nuevaCancha, setNuevaCancha] = useState({
     nombre: "",
     disciplina: "",
@@ -33,6 +35,16 @@ function Admin({ canchas, reservas, cargarDatos }) {
     return new Date(b.created_at) - new Date(a.created_at);
   });
 
+  const limpiarFormulario = () => {
+    setNuevaCancha({
+      nombre: "",
+      disciplina: "",
+      ubicacion: "",
+    });
+
+    setCanchaEditando(null);
+  };
+
   const agregarCancha = async (e) => {
     e.preventDefault();
 
@@ -41,18 +53,41 @@ function Admin({ canchas, reservas, cargarDatos }) {
       nuevaCancha.disciplina.trim() === "" ||
       nuevaCancha.ubicacion.trim() === ""
     ) {
-      setMensaje("Debes completar todos los campos para agregar una cancha.");
+      setMensaje("Debes completar todos los campos.");
       return;
     }
 
     const canchaDuplicada = canchas.some(
       (cancha) =>
+        cancha.id !== canchaEditando?.id &&
         cancha.nombre.toLowerCase().trim() ===
-        nuevaCancha.nombre.toLowerCase().trim()
+          nuevaCancha.nombre.toLowerCase().trim()
     );
 
     if (canchaDuplicada) {
       setMensaje("Ya existe una cancha registrada con ese nombre.");
+      return;
+    }
+
+    if (canchaEditando) {
+      const { error } = await supabase
+        .from("canchas")
+        .update({
+          nombre: nuevaCancha.nombre.trim(),
+          disciplina: nuevaCancha.disciplina.trim(),
+          ubicacion: nuevaCancha.ubicacion.trim(),
+        })
+        .eq("id", canchaEditando.id);
+
+      if (error) {
+        console.log("Error al editar cancha:", error);
+        setMensaje("Error al actualizar la cancha.");
+        return;
+      }
+
+      setMensaje("Cancha actualizada correctamente.");
+      limpiarFormulario();
+      cargarDatos();
       return;
     }
 
@@ -72,14 +107,21 @@ function Admin({ canchas, reservas, cargarDatos }) {
       return;
     }
 
+    setMensaje("Cancha agregada correctamente.");
+    limpiarFormulario();
+    cargarDatos();
+  };
+
+  const editarCancha = (cancha) => {
+    setCanchaEditando(cancha);
+
     setNuevaCancha({
-      nombre: "",
-      disciplina: "",
-      ubicacion: "",
+      nombre: cancha.nombre,
+      disciplina: cancha.disciplina,
+      ubicacion: cancha.ubicacion,
     });
 
-    setMensaje("Cancha agregada correctamente.");
-    cargarDatos();
+    setMensaje(`Editando ${cancha.nombre}.`);
   };
 
   const cambiarEstadoCancha = async (cancha) => {
@@ -260,6 +302,8 @@ function Admin({ canchas, reservas, cargarDatos }) {
           nuevaCancha={nuevaCancha}
           setNuevaCancha={setNuevaCancha}
           agregarCancha={agregarCancha}
+          modoEdicion={canchaEditando !== null}
+          cancelarEdicion={limpiarFormulario}
         />
 
         <TablaCanchasAdmin
@@ -267,6 +311,7 @@ function Admin({ canchas, reservas, cargarDatos }) {
           reservas={reservas}
           cambiarEstadoCancha={cambiarEstadoCancha}
           eliminarCancha={eliminarCancha}
+          editarCancha={editarCancha}
         />
       </div>
 

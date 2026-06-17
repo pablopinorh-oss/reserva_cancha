@@ -1,11 +1,18 @@
-function FormularioCancha({ nuevaCancha, setNuevaCancha, agregarCancha }) {
+function FormularioCancha({
+  nuevaCancha,
+  setNuevaCancha,
+  agregarCancha,
+  modoEdicion,
+  cancelarEdicion,
+}) {
   return (
     <form className="card admin-form-card" onSubmit={agregarCancha}>
-      <h3>Agregar nueva cancha</h3>
+      <h3>{modoEdicion ? "Editar cancha" : "Agregar nueva cancha"}</h3>
 
       <p className="texto-ayuda">
-        Registra una nueva cancha deportiva en el sistema. Por defecto quedará
-        disponible para reservas.
+        {modoEdicion
+          ? "Modifica los datos principales de la cancha seleccionada."
+          : "Registra una nueva cancha deportiva en el sistema. Por defecto quedará disponible para reservas."}
       </p>
 
       <label>Nombre de la cancha</label>
@@ -47,7 +54,19 @@ function FormularioCancha({ nuevaCancha, setNuevaCancha, agregarCancha }) {
         }
       />
 
-      <button type="submit">Agregar cancha</button>
+      <button type="submit">
+        {modoEdicion ? "Guardar cambios" : "Agregar cancha"}
+      </button>
+
+      {modoEdicion && (
+        <button
+          type="button"
+          className="btn-eliminar"
+          onClick={cancelarEdicion}
+        >
+          Cancelar edición
+        </button>
+      )}
     </form>
   );
 }
