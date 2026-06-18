@@ -5,7 +5,7 @@ import TablaReservasAdmin from "../components/TablaReservasAdmin";
 import ResumenAdmin from "../components/ResumenAdmin";
 import FormularioCancha from "../components/FormularioCancha";
 import ReporteAdmin from "../components/ReporteAdmin";
-
+<!--AAAAAAAAAAAAALOOOOOOOOOOOO-->
 function Admin({ canchas, reservas, cargarDatos }) {
   const [mensaje, setMensaje] = useState("");
   const [canchaEditando, setCanchaEditando] = useState(null);
