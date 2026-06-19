@@ -1,0 +1,1446 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-principal: #1d3557;
+  --color-secundario: #457b9d;
+  --color-fondo: #eef3f7;
+  --color-card: #ffffff;
+  --color-texto: #243042;
+  --color-muted: #6b7280;
+  --color-borde: #dbe3ea;
+  --color-exito: #2d6a4f;
+  --color-exito-bg: #d8f3dc;
+  --color-error: #b02a37;
+  --color-error-bg: #fde2e4;
+  --shadow-suave: 0 8px 22px rgba(29, 53, 87, 0.08);
+  --shadow-card: 0 12px 28px rgba(29, 53, 87, 0.1);
+}
+
+body {
+  margin: 0;
+  font-family: "Fira Sans", sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 34px 24px 50px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--color-principal);
+  font-size: 40px;
+  margin: 0 0 10px;
+  letter-spacing: -0.8px;
+}
+
+main > p {
+  text-align: center;
+  color: var(--color-muted);
+  margin: 0 0 28px;
+  font-size: 15px;
+}
+
+h2 {
+  color: var(--color-principal);
+  margin: 0 0 14px;
+  font-size: 26px;
+  letter-spacing: -0.4px;
+}
+
+h3 {
+  color: #223044;
+  margin-top: 0;
+}
+
+h4 {
+  color: var(--color-principal);
+}
+
+/* =========================
+   Barra usuario
+========================= */
+
+.barra-usuario {
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-suave);
+}
+
+.barra-usuario strong {
+  color: var(--color-principal);
+}
+
+/* =========================
+   Navegación
+========================= */
+
+.nav-vistas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.nav-vistas button {
+  min-width: 150px;
+}
+
+.btn-activo {
+  background-color: var(--color-secundario);
+}
+
+/* =========================
+   Login
+========================= */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: var(--shadow-card);
+}
+
+.login-card h2 {
+  text-align: center;
+}
+
+.login-card p {
+  text-align: center;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.login-card label {
+  display: block;
+  font-weight: 700;
+  color: var(--color-principal);
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+
+.login-card input,
+.login-card select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  font-size: 15px;
+  background-color: white;
+  outline: none;
+}
+
+.login-card input:focus,
+.login-card select:focus {
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.15);
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 22px;
+}
+
+/* =========================
+   Botones
+========================= */
+
+button {
+  background-color: var(--color-principal);
+  color: white;
+  border: none;
+  border-radius: 11px;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: var(--color-secundario);
+}
+
+button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.btn-cancelar {
+  background-color: var(--color-error);
+  margin-top: 10px;
+}
+
+.btn-cancelar:hover {
+  background-color: #842029;
+}
+
+.btn-activar {
+  background-color: var(--color-exito);
+  margin-top: 10px;
+}
+
+.btn-activar:hover {
+  background-color: #1b4332;
+}
+
+.btn-eliminar,
+.btn-cerrar {
+  background-color: #64748b;
+}
+
+.btn-eliminar:hover,
+.btn-cerrar:hover {
+  background-color: #475569;
+}
+
+/* =========================
+   Estados
+========================= */
+
+.estado-disponible,
+.estado-no-disponible {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.estado-disponible {
+  color: var(--color-exito);
+  background-color: var(--color-exito-bg);
+  border: 1px solid #95d5b2;
+}
+
+.estado-no-disponible {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  border: 1px solid #f5a6ad;
+}
+
+/* =========================
+   Mensajes
+========================= */
+
+.mensaje {
+  background-color: var(--color-exito-bg);
+  color: #1b4332;
+  border: 1px solid #95d5b2;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  font-weight: 700;
+  box-shadow: var(--shadow-suave);
+}
+.mensaje-error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid #f5a6ad;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  font-weight: 700;
+  box-shadow: var(--shadow-suave);
+}
+
+/* =========================
+   Cards generales
+========================= */
+
+.card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-suave);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #1f2937;
+  font-size: 19px;
+}
+
+.card p {
+  margin: 8px 0;
+  color: #374151;
+  line-height: 1.45;
+}
+
+.card strong {
+  color: #1f2937;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.subtitulo-card {
+  font-size: 14px;
+  color: var(--color-muted);
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+/* =========================
+   Vista estudiante
+========================= */
+
+.titulo-estudiante-simple {
+  text-align: center;
+  margin: 18px 0 18px;
+}
+
+.titulo-estudiante-simple h2 {
+  margin: 0 0 6px;
+  font-size: 25px;
+}
+
+.titulo-estudiante-simple p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 15px;
+}
+
+.resumen-estudiante-compacto {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: var(--shadow-suave);
+}
+
+.item-resumen-estudiante {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid #edf2f7;
+  text-align: center;
+}
+
+.item-resumen-estudiante:last-child {
+  border-right: none;
+}
+
+.item-resumen-estudiante span {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.item-resumen-estudiante strong {
+  color: var(--color-principal);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.barra-reserva-compacta {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-bottom: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  gap: 12px;
+  align-items: end;
+  box-shadow: var(--shadow-suave);
+}
+
+.campo-reserva label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-principal);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.campo-reserva input,
+.campo-reserva select {
+  width: 100%;
+  height: 38px;
+  padding: 9px 12px;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  background-color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.campo-reserva input:focus,
+.campo-reserva select:focus {
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.15);
+}
+
+.regla-reserva-compacta {
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 14px;
+  padding: 9px 12px;
+  min-height: 38px;
+  text-align: center;
+}
+
+.regla-reserva-compacta span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.regla-reserva-compacta strong {
+  display: block;
+  color: var(--color-principal);
+  font-size: 13px;
+}
+
+.regla-reserva-compacta small {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.layout-estudiante {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 22px;
+  align-items: start;
+}
+
+.columna-canchas {
+  min-width: 0;
+}
+
+.seccion-titulo {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.seccion-titulo h2 {
+  margin: 0 0 6px;
+}
+
+.seccion-titulo p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.grid-canchas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.grid-canchas-estudiante {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.cancha-card-mejorada {
+  padding: 18px;
+  min-height: auto;
+}
+
+.cancha-card-mejorada .card-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.cancha-card-mejorada h3 {
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.bloque-horarios {
+  margin-top: 14px;
+}
+
+.bloque-horarios h4 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.horario-chip {
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  gap: 12px;
+}
+
+.horario-chip span {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.horario-chip small {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.horario-chip.disponible {
+  background-color: #2d6a4f;
+  color: white;
+  border-color: #2d6a4f;
+}
+
+.horario-chip.disponible:hover {
+  background-color: #1b4332;
+  border-color: #1b4332;
+}
+
+.horario-chip.ocupado,
+.horario-chip.bloqueado {
+  background-color: #eef2f7;
+  color: #64748b;
+  border-color: #dbe3ea;
+}
+
+.horario-chip.ocupado span,
+.horario-chip.bloqueado span {
+  color: #334155;
+}
+
+.horario-chip.ocupado small,
+.horario-chip.bloqueado small {
+  color: #64748b;
+}
+
+.estado-fecha-pendiente {
+  background-color: #f8fafc;
+  border: 1px dashed var(--color-borde);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  color: var(--color-muted);
+  margin-top: 10px;
+}
+
+.estado-fecha-pendiente strong {
+  display: block;
+  color: var(--color-principal);
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.estado-fecha-pendiente p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Panel mis reservas */
+
+.panel-mis-reservas {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--shadow-suave);
+  position: sticky;
+  top: 20px;
+}
+
+.panel-mis-reservas-header h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: var(--color-principal);
+  text-align: center;
+}
+
+.panel-mis-reservas-header p {
+  margin: 0 0 16px;
+  color: var(--color-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.lista-reservas-compacta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reserva-card-compacta {
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  border-left: 5px solid var(--color-exito);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.reserva-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.reserva-card-header h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  color: var(--color-principal);
+}
+
+.reserva-card-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.reserva-detalle-compacto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 10px;
+  color: #334155;
+  font-size: 14px;
+  text-align: center;
+}
+
+.btn-cancelar-compacto {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.estado-vacio {
+  background-color: var(--color-card);
+  border: 1px dashed var(--color-borde);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  color: var(--color-muted);
+  box-shadow: var(--shadow-suave);
+}
+
+.estado-vacio h3 {
+  margin-bottom: 8px;
+  color: var(--color-principal);
+}
+
+.estado-vacio-compacto {
+  padding: 18px;
+}
+
+/* =========================
+   Admin
+========================= */
+
+.encabezado-seccion {
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-suave);
+}
+
+.encabezado-seccion h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.encabezado-seccion p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.resumen-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.resumen-card {
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow-suave);
+  text-align: left;
+}
+
+.resumen-card span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.resumen-card strong {
+  display: block;
+  color: var(--color-principal);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.admin-form-card {
+  position: sticky;
+  top: 20px;
+}
+
+.admin-form-card label {
+  display: block;
+  font-weight: 700;
+  color: var(--color-principal);
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+.admin-form-card input,
+.card input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  font-size: 15px;
+  background-color: white;
+  outline: none;
+}
+
+.admin-form-card input:focus,
+.card input:focus {
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.15);
+}
+
+.admin-form-card button {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.texto-ayuda {
+  background-color: #f8fafc;
+  border: 1px dashed var(--color-borde);
+  border-radius: 12px;
+  padding: 10px;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.admin-panel-listado,
+.panel-reservas {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-suave);
+}
+
+.admin-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-panel-header h3 {
+  margin: 0 0 6px;
+  color: var(--color-principal);
+}
+
+.admin-panel-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.tabla-admin th {
+  background-color: #f1f5f9;
+  color: var(--color-principal);
+  font-size: 13px;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-borde);
+  white-space: nowrap;
+}
+
+.tabla-admin td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #edf2f7;
+  color: #334155;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.tabla-admin tr:hover {
+  background-color: #f8fafc;
+}
+
+.contador-tabla {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 30px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: #e8f1f8;
+  color: var(--color-principal);
+  font-weight: 800;
+}
+
+.acciones-tabla,
+.acciones-admin {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.acciones-tabla button {
+  margin-top: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1050px) {
+  .layout-estudiante,
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-mis-reservas,
+  .admin-form-card {
+    position: static;
+  }
+}
+
+@media (max-width: 800px) {
+  .barra-reserva-compacta {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-estudiante-compacto {
+    flex-direction: column;
+  }
+
+  .item-resumen-estudiante {
+    border-right: none;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 10px;
+  }
+
+  .item-resumen-estudiante:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  main {
+    padding: 24px 16px 40px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .barra-usuario {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .barra-usuario button {
+    width: 100%;
+  }
+
+  .nav-vistas {
+    flex-direction: column;
+  }
+
+  .nav-vistas button {
+    width: 100%;
+  }
+
+  .horario-chip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .acciones-tabla,
+  .acciones-admin {
+    flex-direction: column;
+  }
+
+  .acciones-tabla button,
+  .acciones-admin button {
+    width: 100%;
+  }
+}
+/* =========================
+   Vista móvil mejorada
+   Agregar al final de App.css
+========================= */
+
+@media (max-width: 600px) {
+  main {
+    padding: 18px 12px 34px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  main > p {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  h3 {
+    font-size: 17px;
+  }
+
+  .barra-usuario {
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+
+  .barra-usuario span,
+  .barra-usuario strong {
+    font-size: 14px;
+  }
+
+  .nav-vistas {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .nav-vistas button {
+    min-width: 0;
+    width: 100%;
+    padding: 11px 12px;
+  }
+
+  .titulo-estudiante-simple {
+    margin: 12px 0 14px;
+  }
+
+  .titulo-estudiante-simple h2 {
+    font-size: 22px;
+  }
+
+  .titulo-estudiante-simple p {
+    font-size: 13px;
+  }
+
+  .resumen-estudiante-compacto {
+    padding: 12px;
+    gap: 10px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .item-resumen-estudiante {
+    text-align: left;
+    padding-bottom: 8px;
+  }
+
+  .item-resumen-estudiante span {
+    font-size: 12px;
+  }
+
+  .item-resumen-estudiante strong {
+    font-size: 16px;
+  }
+
+  .barra-reserva-compacta {
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+
+  .campo-reserva label {
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .campo-reserva input,
+  .campo-reserva select {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .regla-reserva-compacta {
+    padding: 10px;
+    text-align: left;
+  }
+
+  .layout-estudiante {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .seccion-titulo {
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
+
+  .seccion-titulo h2 {
+    font-size: 21px;
+  }
+
+  .seccion-titulo p {
+    font-size: 13px;
+  }
+
+  .grid-canchas,
+  .grid-canchas-estudiante {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card,
+  .cancha-card-mejorada,
+  .panel-mis-reservas,
+  .admin-panel-listado,
+  .panel-reservas,
+  .encabezado-seccion {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cancha-card-mejorada h3 {
+    font-size: 17px;
+  }
+
+  .subtitulo-card {
+    font-size: 13px;
+  }
+
+  .estado-disponible,
+  .estado-no-disponible {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .bloque-horarios h4 {
+    font-size: 15px;
+  }
+
+  .horarios-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .horario-chip {
+    min-height: 48px;
+    padding: 10px 12px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .horario-chip span {
+    font-size: 14px;
+  }
+
+  .horario-chip small {
+    font-size: 11px;
+  }
+
+  .panel-mis-reservas {
+    position: static;
+    order: 2;
+  }
+
+  .panel-mis-reservas-header h2 {
+    font-size: 20px;
+  }
+
+  .panel-mis-reservas-header p {
+    font-size: 13px;
+  }
+
+  .reserva-card-compacta {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .reserva-card-header {
+    flex-direction: column;
+  }
+
+  .reserva-detalle-compacto {
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .btn-cancelar-compacto {
+    padding: 10px;
+  }
+
+  .login-container {
+    margin-top: 18px;
+  }
+
+  .login-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .login-card h2 {
+    font-size: 22px;
+  }
+
+  .login-card p {
+    font-size: 14px;
+  }
+
+  .encabezado-seccion h2 {
+    font-size: 21px;
+  }
+
+  .encabezado-seccion p {
+    font-size: 13px;
+  }
+
+  .resumen-admin {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .resumen-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .resumen-card span {
+    font-size: 12px;
+  }
+
+  .resumen-card strong {
+    font-size: 22px;
+  }
+
+  .admin-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-form-card {
+    position: static;
+    width: 100%;
+  }
+
+  .admin-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabla-contenedor {
+    overflow-x: auto;
+  }
+
+  .tabla-admin {
+    min-width: 720px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+}
+/* =========================
+/* =========================
+   HOTFIX MÓVIL INPUTS Y FECHA
+   Pegar al final de App.css
+========================= */
+
+@media (max-width: 600px) {
+  * {
+    box-sizing: border-box !important;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 14px 38px !important;
+    overflow-x: hidden !important;
+  }
+
+  .barra-reserva-compacta {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .campo-reserva,
+  .regla-reserva-compacta {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: block !important;
+  }
+
+  .campo-reserva label {
+    width: 100% !important;
+    text-align: left !important;
+    font-size: 15px !important;
+    margin-bottom: 7px !important;
+  }
+
+  input,
+  select,
+  textarea,
+  .login-card input,
+  .login-card select,
+  .campo-reserva input,
+  .campo-reserva select,
+  .admin-form-card input,
+  .card input {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    color: #243042 !important;
+    background-color: #ffffff !important;
+    border: 1px solid var(--color-borde) !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #243042 !important;
+    caret-color: #243042 !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #9ca3af !important;
+  }
+
+  input[type="date"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    color: #243042 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #243042 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+  }
+
+  input[type="date"]::-webkit-date-and-time-value {
+    text-align: left !important;
+    color: #243042 !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.75 !important;
+  }
+
+  .regla-reserva-compacta {
+    padding: 13px !important;
+    border-radius: 14px !important;
+    text-align: left !important;
+  }
+
+  .regla-reserva-compacta span {
+    font-size: 14px !important;
+  }
+
+  .regla-reserva-compacta strong {
+    font-size: 16px !important;
+  }
+
+  .regla-reserva-compacta small {
+    font-size: 13px !important;
+  }
+
+  .horario-chip {
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .horario-chip span {
+    font-size: 15px !important;
+  }
+
+  .horario-chip small {
+    font-size: 12px !important;
+  }
+}
+/* =========================
+   Reporte administrador
+========================= */
+
+.reporte-admin {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-suave);
+}
+
+.reporte-admin-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.reporte-admin-header h3 {
+  margin: 0 0 6px;
+  color: var(--color-principal);
+  font-size: 22px;
+}
+
+.reporte-admin-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.reporte-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.reporte-card {
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+.reporte-card span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.reporte-card strong {
+  display: block;
+  color: var(--color-principal);
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.reporte-card small {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.reporte-card-destacado strong {
+  font-size: 17px;
+}
